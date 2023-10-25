@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\NodeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,6 +35,14 @@ class Node
 
     #[ORM\Column(length: 255)]
     private ?string $application = null;
+
+    #[ORM\OneToMany(mappedBy: 'node', targetEntity: Others::class)]
+    private Collection $others;
+
+    public function __construct()
+    {
+        $this->others = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -107,6 +117,36 @@ class Node
     public function setApplication(string $application): static
     {
         $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Others>
+     */
+    public function getOthers(): Collection
+    {
+        return $this->others;
+    }
+
+    public function addOther(Others $other): static
+    {
+        if (!$this->others->contains($other)) {
+            $this->others->add($other);
+            $other->setNode($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOther(Others $other): static
+    {
+        if ($this->others->removeElement($other)) {
+            // set the owning side to null (unless already changed)
+            if ($other->getNode() === $this) {
+                $other->setNode(null);
+            }
+        }
 
         return $this;
     }

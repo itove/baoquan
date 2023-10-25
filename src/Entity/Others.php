@@ -19,6 +19,10 @@ class Others
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
+    #[ORM\ManyToOne(inversedBy: 'others')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Node $node = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +48,18 @@ class Others
     public function setImage(string $image): static
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getNode(): ?Node
+    {
+        return $this->node;
+    }
+
+    public function setNode(?Node $node): static
+    {
+        $this->node = $node;
 
         return $this;
     }
