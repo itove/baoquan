@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -27,6 +29,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'lawyer', targetEntity: Node::class)]
+    private Collection $nodes;
+
+    public function __construct()
+    {
+        $this->nodes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -96,5 +106,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Node>
+     */
+    public function getNodes(): Collection
+    {
+        return $this->nodes;
+    }
+
+    public function addNode(Node $node): static
+    {
+        if (!$this->nodes->contains($node)) {
+            $this->nodes->add($node);
+            $node->setLawyer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNode(Node $node): static
+    {
+        if ($this->nodes->removeElement($node)) {
+            // set the owning side to null (unless already changed)
+            if ($node->getLawyer() === $this) {
+                $node->setLawyer(null);
+            }
+        }
+
+        return $this;
     }
 }

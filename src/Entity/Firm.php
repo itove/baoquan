@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FirmRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FirmRepository::class)]
@@ -24,6 +26,14 @@ class Firm
 
     #[ORM\Column(length: 13, nullable: true)]
     private ?string $phone = null;
+
+    #[ORM\OneToMany(mappedBy: 'firm', targetEntity: Node::class)]
+    private Collection $nodes;
+
+    public function __construct()
+    {
+        $this->nodes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +84,36 @@ class Firm
     public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Node>
+     */
+    public function getNodes(): Collection
+    {
+        return $this->nodes;
+    }
+
+    public function addNode(Node $node): static
+    {
+        if (!$this->nodes->contains($node)) {
+            $this->nodes->add($node);
+            $node->setFirm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNode(Node $node): static
+    {
+        if ($this->nodes->removeElement($node)) {
+            // set the owning side to null (unless already changed)
+            if ($node->getFirm() === $this) {
+                $node->setFirm(null);
+            }
+        }
 
         return $this;
     }
