@@ -40,6 +40,10 @@ class Node
     #[ORM\OneToMany(mappedBy: 'node', targetEntity: Others::class)]
     private Collection $others;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Type $type = null;
+
     public function __construct()
     {
         $this->others = new ArrayCollection();
@@ -140,6 +144,18 @@ class Node
                 $other->setNode(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getType(): ?Type
+    {
+        return $this->type;
+    }
+
+    public function setType(?Type $type): static
+    {
+        $this->type = $type;
 
         return $this;
     }
