@@ -51,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Firm $firm = null;
+
     public function __construct()
     {
         $this->nodes = new ArrayCollection();
@@ -224,6 +227,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getFirm(): ?Firm
+    {
+        return $this->firm;
+    }
+
+    public function setFirm(?Firm $firm): static
+    {
+        $this->firm = $firm;
 
         return $this;
     }

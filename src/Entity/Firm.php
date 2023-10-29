@@ -30,9 +30,13 @@ class Firm
     #[ORM\OneToMany(mappedBy: 'firm', targetEntity: Node::class)]
     private Collection $nodes;
 
+    #[ORM\OneToMany(mappedBy: 'firm', targetEntity: User::class)]
+    private Collection $users;
+
     public function __construct()
     {
         $this->nodes = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +116,36 @@ class Firm
             // set the owning side to null (unless already changed)
             if ($node->getFirm() === $this) {
                 $node->setFirm(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setFirm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getFirm() === $this) {
+                $user->setFirm(null);
             }
         }
 
