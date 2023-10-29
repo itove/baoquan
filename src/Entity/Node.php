@@ -48,6 +48,11 @@ class Node
     {
         $this->others = new ArrayCollection();
     }
+    
+    public function __toString()
+    {
+        return $this->title;
+    }
 
     public function getId(): ?int
     {
