@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use App\Entity\Type;
 use App\Entity\Node;
 use App\Entity\Firm;
 use App\Entity\User;
@@ -45,6 +46,7 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToCrud('Node', 'fas fa-cat', Type::class);
         yield MenuItem::linkToCrud('Node', 'fas fa-file-alt', Node::class);
         yield MenuItem::linkToCrud('Firm', 'fas fa-building-columns', Firm::class);
         yield MenuItem::linkToCrud('User', 'fas fa-user-cog', User::class);

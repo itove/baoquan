@@ -23,9 +23,6 @@ class Node
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $type = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $body = null;
 
@@ -61,18 +58,6 @@ class Node
     public function setTitle(string $title): static
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getType(): ?int
-    {
-        return $this->type;
-    }
-
-    public function setType(int $type): static
-    {
-        $this->type = $type;
 
         return $this;
     }
