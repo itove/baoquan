@@ -7,7 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: NodeRepository::class)]
 class Node
 {
@@ -27,14 +31,14 @@ class Node
 
     #[ORM\ManyToOne(inversedBy: 'nodes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Firm $firm = null;
-
-    #[ORM\ManyToOne(inversedBy: 'nodes')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $lawyer = null;
 
     #[ORM\Column(length: 255)]
     private ?string $application = null;
+    
+    #[Vich\UploadableField(mapping: 'nodes', fileNameProperty: 'application')]
+    #[Assert\Image(maxSize: '1024k', mimeTypes: ['image/jpeg', 'image/png'], mimeTypesMessage: 'Only jpg and png')]
+    private ?File $applicationImageFile = null;
 
     #[ORM\OneToMany(mappedBy: 'node', targetEntity: Others::class)]
     private Collection $others;
@@ -85,18 +89,6 @@ class Node
         return $this;
     }
 
-    public function getFirm(): ?Firm
-    {
-        return $this->firm;
-    }
-
-    public function setFirm(?Firm $firm): static
-    {
-        $this->firm = $firm;
-
-        return $this;
-    }
-
     public function getLawyer(): ?User
     {
         return $this->lawyer;
@@ -119,6 +111,22 @@ class Node
         $this->application = $application;
 
         return $this;
+    }
+
+    public function setApplicationImageFile(?File $applicationImageFile = null): void
+    {
+        $this->applicationImageFile = $applicationImageFile;
+
+        if (null !== $applicationImageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getApplicationImageFile(): ?File
+    {
+        return $this->applicationImageFile;
     }
 
     /**

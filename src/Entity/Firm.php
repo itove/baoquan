@@ -27,15 +27,11 @@ class Firm
     #[ORM\Column(length: 13, nullable: true)]
     private ?string $phone = null;
 
-    #[ORM\OneToMany(mappedBy: 'firm', targetEntity: Node::class)]
-    private Collection $nodes;
-
     #[ORM\OneToMany(mappedBy: 'firm', targetEntity: User::class)]
     private Collection $users;
 
     public function __construct()
     {
-        $this->nodes = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
 
@@ -88,36 +84,6 @@ class Firm
     public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Node>
-     */
-    public function getNodes(): Collection
-    {
-        return $this->nodes;
-    }
-
-    public function addNode(Node $node): static
-    {
-        if (!$this->nodes->contains($node)) {
-            $this->nodes->add($node);
-            $node->setFirm($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNode(Node $node): static
-    {
-        if ($this->nodes->removeElement($node)) {
-            // set the owning side to null (unless already changed)
-            if ($node->getFirm() === $this) {
-                $node->setFirm(null);
-            }
-        }
 
         return $this;
     }
