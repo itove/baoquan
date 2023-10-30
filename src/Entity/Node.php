@@ -33,16 +33,20 @@ class Node
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read', 'write'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['read', 'write'])]
     private ?string $body = null;
 
     #[ORM\ManyToOne(inversedBy: 'nodes')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read', 'write'])]
     private ?User $lawyer = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read', 'write'])]
     private ?string $application = null;
     
     #[Vich\UploadableField(mapping: 'nodes', fileNameProperty: 'application')]
@@ -50,13 +54,16 @@ class Node
     private ?File $applicationImageFile = null;
 
     #[ORM\OneToMany(mappedBy: 'node', targetEntity: Others::class, orphanRemoval: true, cascade: ["persist"])]
+    #[Groups(['read', 'write'])]
     private Collection $others;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read', 'write'])]
     private ?Type $type = null;
 
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()

@@ -8,20 +8,47 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity('username',
+    message: 'This username is already in use',
+)]
+#[UniqueEntity(
+    fields: 'openid',
+    message: 'Openid is already in use',
+)]
+#[UniqueEntity(
+    fields: 'phone',
+    message: 'Phone is already in use',
+)]
+#[ApiResource(
+    normalizationContext: ['groups' => ['read']],
+    denormalizationContext: ['groups' => ['write']],
+)]
+#[ApiFilter(SearchFilter::class, properties: ['id' => 'exact', 'openid' => 'exact', 'phone' => 'exact'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['read', 'write'])]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 30)]
     private ?string $username = null;
 
     #[ORM\Column]
+    #[Groups(['read'])]
     private array $roles = [];
 
     /**
@@ -34,27 +61,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $nodes;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?string $openid = null;
 
     #[ORM\Column(length: 15, nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?string $avatar = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
+    #[Groups(['read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups(['read', 'write'])]
     private ?Firm $firm = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['read', 'write'])]
     private ?string $plainPassword = null;
 
     public function __construct()
