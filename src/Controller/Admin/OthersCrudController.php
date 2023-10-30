@@ -27,7 +27,7 @@ class OthersCrudController extends AbstractCrudController
         yield TextField::new('name');
         yield ImageField::new('image')
             ->onlyOnIndex()
-            ->setBasePath('img/others/')
+            ->setBasePath('files/others/')
             // ->setUploadDir('public/img/node/')
         ;
         yield VichImageField::new('imageFile', 'ImageFile')

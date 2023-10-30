@@ -43,6 +43,9 @@ class Others
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['read', 'write'])]
     private ?Node $node = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
     
     public function __toString(): string
     {
@@ -102,6 +105,18 @@ class Others
     public function setNode(?Node $node): static
     {
         $this->node = $node;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
