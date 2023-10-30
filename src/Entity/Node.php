@@ -37,7 +37,7 @@ class Node
     #[Assert\Image(maxSize: '1024k', mimeTypes: ['image/jpeg', 'image/png'], mimeTypesMessage: 'Only jpg and png')]
     private ?File $applicationImageFile = null;
 
-    #[ORM\OneToMany(mappedBy: 'node', targetEntity: Others::class)]
+    #[ORM\OneToMany(mappedBy: 'node', targetEntity: Others::class, orphanRemoval: true, cascade: ["persist"])]
     private Collection $others;
 
     #[ORM\ManyToOne]
