@@ -45,7 +45,7 @@ class Node
     #[Groups(['read', 'write'])]
     private ?User $lawyer = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read', 'write'])]
     private ?string $application = null;
     
@@ -127,7 +127,7 @@ class Node
         return $this->application;
     }
 
-    public function setApplication(string $application): static
+    public function setApplication(?string $application): static
     {
         $this->application = $application;
 

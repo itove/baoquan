@@ -31,7 +31,7 @@ class Others
     #[Groups(['read', 'write'])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read', 'write'])]
     private ?string $image = null;
     
@@ -79,7 +79,7 @@ class Others
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(?string $image): static
     {
         $this->image = $image;
 
