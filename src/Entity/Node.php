@@ -73,6 +73,7 @@ class Node
     {
         $this->others = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
     }
     
     public function __toString()

@@ -47,6 +47,11 @@ class Others
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
     
+    public function __construct()
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+    
     public function __toString(): string
     {
         return $this->name;
