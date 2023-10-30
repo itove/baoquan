@@ -69,6 +69,7 @@ class Node
     public function __construct()
     {
         $this->others = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
     
     public function __toString()

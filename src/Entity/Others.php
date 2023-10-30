@@ -35,7 +35,7 @@ class Others
     #[Groups(['read', 'write'])]
     private ?string $image = null;
     
-    #[Vich\UploadableField(mapping: 'nodes', fileNameProperty: 'image')]
+    #[Vich\UploadableField(mapping: 'others', fileNameProperty: 'image')]
     #[Assert\Image(maxSize: '1024k', mimeTypes: ['image/jpeg', 'image/png'], mimeTypesMessage: 'Only jpg and png')]
     private ?File $imageFile = null;
 
