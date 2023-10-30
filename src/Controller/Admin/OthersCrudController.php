@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use App\Admin\Field\VichImageField;
+use App\Admin\Field\VichFileField;
 
 class OthersCrudController extends AbstractCrudController
 {
