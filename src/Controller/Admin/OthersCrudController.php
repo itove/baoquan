@@ -30,7 +30,7 @@ class OthersCrudController extends AbstractCrudController
             ->setBasePath('img/others/')
             // ->setUploadDir('public/img/node/')
         ;
-        yield VichImageField::new('imageFile', 'imageFile')
+        yield VichImageField::new('imageFile', 'ImageFile')
             ->hideOnIndex()
         ;
     }
