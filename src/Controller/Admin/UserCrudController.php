@@ -29,8 +29,9 @@ class UserCrudController extends AbstractCrudController
         yield TextField::new('name');
         // yield TextField::new('avatar');
         yield ChoiceField::new('roles')
-            ->setChoices(['admin' => 'ROLE_ADMIN'])
+            ->setChoices(['Admin' => 'ROLE_ADMIN', 'User' => 'ROLE_USER'])
             ->allowMultipleChoices()
+            ->setRequired(false)
         ;
         yield AssociationField::new('firm');
         yield DateTimeField::new('createdAt')->onlyOnIndex();
