@@ -101,6 +101,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     
     public function __toString()
     {
+        if ($this->name === null) {
+            return $this->username;
+        }
         return $this->name;
     }
 
