@@ -100,7 +100,7 @@ class SecurityController extends AbstractDashboardController
             "roles" => $user->getRoles(),
             "name" => $user->getName(),
             "phone" => $user->getPhone(),
-            "org" => $user->getOrg()
+            "firm" => $user->getFirm(),
         ];
         return $this->json($resp);
     }
