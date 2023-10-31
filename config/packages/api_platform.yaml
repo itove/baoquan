@@ -1,13 +1,21 @@
 api_platform:
     title: Hello API Platform
     version: 1.0.0
+    show_webby: false
+
     formats:
+        json: ['application/json']
         jsonld: ['application/ld+json']
     docs_formats:
         jsonld: ['application/ld+json']
         jsonopenapi: ['application/vnd.openapi+json']
         html: ['text/html']
+
     defaults:
+        item_operations: ['get']
+        collection_operations: ['get']
+        pagination_client_items_per_page: true
+        pagination_items_per_page: 50
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
@@ -16,3 +24,11 @@ api_platform:
             rfc_7807_compliant_errors: true
     event_listeners_backward_compatibility_layer: false
     keep_legacy_inflector: false
+
+    collection:
+      pagination:
+        items_per_page_parameter_name: itemsPerPage
+      order: 'DESC'
+      order_parameter_name: 'order'
+    graphql:
+      enabled: false
