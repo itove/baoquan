@@ -95,11 +95,6 @@ class SecurityController extends AbstractDashboardController
             $em->flush();
         }
         
-        if ($user->isReloginRequired()) {
-            $user->setReloginRequired(false);
-            $em->flush();
-        }
-
         $resp = [
             "id" => $user->getId(),
             "roles" => $user->getRoles(),
