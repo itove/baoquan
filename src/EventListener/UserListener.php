@@ -13,9 +13,11 @@ use App\Entity\User;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\Events;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 #[AsEntityListener(event: Events::prePersist, entity: User::class)]
 #[AsEntityListener(event: Events::postPersist, entity: User::class)]
+#[AsEntityListener(event: Events::preUpdate, entity: User::class)]
 class UserListener extends AbstractController
 {
     private $hasher;
@@ -39,5 +41,13 @@ class UserListener extends AbstractController
 
     public function postPersist(User $user, LifecycleEventArgs $event): void
     {
+    }
+    
+    public function preUpdate(User $user, PreUpdateEventArgs $event): void
+    {
+        if ($event->hasChangedField('plainPassword')) {
+            $user->setPassword($this->hasher->hashPassword($user, $user->getPlainPassword()));
+            $user->eraseCredentials();
+        }
     }
 }
