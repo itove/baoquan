@@ -50,5 +50,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Node', 'fas fa-file-alt', Node::class);
         yield MenuItem::linkToCrud('Firm', 'fas fa-building-columns', Firm::class);
         yield MenuItem::linkToCrud('User', 'fas fa-user-cog', User::class);
+        yield MenuItem::linkToCrud('Chpwd', 'fas fa-key', User::class)
+            ->setController(PasswordCrudController::class)
+            ->setAction('edit')
+            ->setEntityId($this->getUser()->getId());
     }
 }
