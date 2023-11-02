@@ -13,9 +13,7 @@ use App\Entity\Others;
 use App\Entity\MediaObject;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 
-#[AsEntityListener(event: Events::onVichUploaderPostUpload, entity: MediaObject::class)]
 class Upload
 {
     private $em;
@@ -28,8 +26,6 @@ class Upload
     public function onVichUploaderPostUpload(Event $event): void
     {
         $object = $event->getObject();
-        dump($event);
-        dump($object);
         
         if ($object instanceof Node) {
         }
@@ -43,12 +39,12 @@ class Upload
             if (is_null($type)) {
                 $type = 9;
             }
-            $dir = match ($type) {
-                1 => 'avatar',
-                2 => 'node',
-                3 => 'others',
-                9 => 'media',
-            };
+            // $dir = match ($type) {
+            //     1 => 'avatar',
+            //     2 => 'node',
+            //     3 => 'others',
+            //     9 => 'media',
+            // };
         } else {
             $file = $object->getImageFile();
         }
