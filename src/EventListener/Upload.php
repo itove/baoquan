@@ -13,6 +13,7 @@ use App\Entity\Others;
 use App\Entity\MediaObject;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 
 #[AsEntityListener(event: Events::onVichUploaderPostUpload, entity: MediaObject::class)]
 class Upload
