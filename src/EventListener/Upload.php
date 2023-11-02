@@ -38,7 +38,7 @@ class Upload
             // dump(getcwd());
             // dump($file->getPathname()); // /home/al/w/subao/public/files/media/xxxxxx.jpg
             // dump($file->getPath()); // /home/al/w/subao/public/files/media
-            dump($file->getFilename()); // xxxxx.jpg
+            // dump($file->getFilename()); // xxxxx.jpg
             $type = $object->getType();
             if (is_null($type)) {
                 $type = 9;
@@ -56,7 +56,7 @@ class Upload
             }
             symlink('../media/' . $file->getFilename(), $file->getPath() . '/../' . $dir . $file->getFilename());
         } else {
-            $file = $object->getImageFile();
+            // $file = $object->getImageFile();
         }
     }
 }
