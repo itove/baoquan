@@ -15,7 +15,7 @@ api_platform:
         item_operations: ['get']
         collection_operations: ['get']
         pagination_client_items_per_page: true
-        pagination_items_per_page: 15
+        pagination_items_per_page: 10
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
