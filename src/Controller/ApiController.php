@@ -21,7 +21,7 @@ class ApiController extends AbstractController
         $this->wx = $wx;
     }
     
-    #[Route(path: '/api/wxlogin', name: 'api_wx_login', methods: ['POST'])]
+    #[Route(path: '/api/wxgetphone', name: 'api_wx_getphone', methods: ['POST'])]
     public function wxLogin(Request $request)
     {
         $data = json_decode($request->getContent());
@@ -30,12 +30,5 @@ class ApiController extends AbstractController
         dump($res);
         $resp = $res;
         return $this->json($resp);
-    }
-    
-    public function index(): Response
-    {
-        return $this->render('api/index.html.twig', [
-            'controller_name' => 'ApiController',
-        ]);
     }
 }
