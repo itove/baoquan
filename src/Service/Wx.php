@@ -115,6 +115,9 @@ class Wx
         });
     }
     
+    /**
+     * https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/user-info/phone-number/getPhoneNumber.html
+     */
     public function getPhoneNumber(string $code)
     {
         $token = $this->getStableAccessToken();

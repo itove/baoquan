@@ -26,9 +26,7 @@ class ApiController extends AbstractController
     {
         $data = json_decode($request->getContent());
         $code = $data->code;
-        $res = $this->wx->getPhoneNumber($code);
-        dump($res);
-        $resp = $res;
+        $resp = $this->wx->getPhoneNumber($code);
         return $this->json($resp);
     }
 }
