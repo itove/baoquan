@@ -55,6 +55,7 @@ class DashboardController extends AbstractDashboardController
             ->setController(PasswordCrudController::class)
             ->setAction('edit')
             ->setEntityId($this->getUser()->getId());
+        yield MenuItem::linkToUrl('Changelog', 'fas fa-note-sticky', '/changelog/');
     }
 
     public function configureCrud(): Crud
