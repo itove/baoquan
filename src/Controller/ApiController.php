@@ -21,7 +21,7 @@ class ApiController extends AbstractController
         $this->wx = $wx;
     }
     
-    #[Route(path: '/api/wxgetphone', name: 'api_wx_getphone', methods: ['POST'])]
+    #[Route(path: '/wxgetphone', name: 'api_wx_getphone', methods: ['POST'])]
     public function wxLogin(Request $request)
     {
         $data = json_decode($request->getContent());
