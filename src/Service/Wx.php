@@ -114,4 +114,15 @@ class Wx
             return $this->genScheme($page, $query);
         });
     }
+    
+    public function getPhoneNumber(string $code)
+    {
+        $token = $this->getStableAccessToken();
+        $url = "https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token={$token}";
+        $data = [
+            'code' => $code,
+        ];
+        $content = $this->httpClient->request('POST', $url, ['json' => $data])->toArray();
+        return $content;
+    }
 }
