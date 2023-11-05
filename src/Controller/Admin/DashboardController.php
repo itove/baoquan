@@ -12,6 +12,7 @@ use App\Entity\Type;
 use App\Entity\Node;
 use App\Entity\Firm;
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -54,5 +55,15 @@ class DashboardController extends AbstractDashboardController
             ->setController(PasswordCrudController::class)
             ->setAction('edit')
             ->setEntityId($this->getUser()->getId());
+    }
+
+    public function configureCrud(): Crud
+    {
+        return Crud::new()
+            ->showEntityActionsInlined()
+            ->setTimezone('Asia/Shanghai')
+            ->setDateTimeFormat('yyyy/MM/dd HH:mm')
+            ->setDefaultSort(['id' => 'DESC'])
+        ;
     }
 }
